@@ -1,14 +1,32 @@
 import React from 'react';
-import './App.css';
+import Form from './components/molecules/form/Form'
+import styled from 'styled-components'
+import AppContainer from './components/templates/appContainer/AppContainer'
 
-function App() {
+interface AppProps {
+
+  className?: string;
+}
+
+const App: React.FunctionComponent<AppProps> = (props) => {
+  function onSearch(value: string): void {
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-
-      </header>
-    </div>
+    <AppContainer>
+      <div className={props.className}>
+        <Form {...{ onSearch }} />
+      </div>
+    </AppContainer>
   );
 }
 
-export default App;
+const StyledApp = styled(App)`
+  margin: 141px 195px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export default StyledApp;
