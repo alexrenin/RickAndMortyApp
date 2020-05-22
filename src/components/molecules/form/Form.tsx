@@ -1,8 +1,8 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import styled from 'styled-components'
 import InputSearch from '../../atoms/inputSearch/InputSearch'
 import { preventEvent } from "../../../helper/helper";
-import _ from 'lodash';
+import { throttle } from 'lodash';
 
 interface FormProps {
   onSearch(value: string): void,
@@ -10,40 +10,40 @@ interface FormProps {
   className?: string;
 }
 
-const Form: React.FunctionComponent<FormProps> = (props) => {
-  const { onSearch = () => {} } = props
+const Form: React.FunctionComponent<FormProps> = ({
+  onSearch = () => {},
+  className
+}) => {
+  return useMemo(
+    () => {
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const { value = '' } = event.target
 
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>): void => {
-      const { value = '' } = event.target
-
-      if (value.length > 2) {
-        _.throttle(
-          () => {
-            onSearch(value)
-          },
-          300
-        )
+        if (value.length > 2) {
+          throttle(
+            onSearch,
+            300
+          )(value)
+        }
       }
+
+      return (
+        <form
+          onSubmit={preventEvent}
+          className={className}
+        >
+          <InputSearch
+            onChange={handleChange}
+          />
+        </form>
+      )
     },
     [onSearch]
-  )
-
-  return (
-    <form
-      onSubmit={preventEvent}
-      className={props.className}
-    >
-      <InputSearch
-        onChange={handleChange}
-      />
-    </form>
   )
 }
 
 const StyledForm = styled(Form)`
-  display: flex;
-  
+  display: flex;  
   width: 100%;
   height: 80px;
   

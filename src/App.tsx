@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from './components/molecules/form/Form'
 import styled from 'styled-components'
 import AppContainer from './components/templates/appContainer/AppContainer'
+import PictureList from  './components/molecules/pictureList/PictureList'
 
 interface AppProps {
 
@@ -9,14 +10,15 @@ interface AppProps {
 }
 
 const App: React.FunctionComponent<AppProps> = (props) => {
-  function onSearch(value: string): void {
-
-  }
+  const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <AppContainer>
       <div className={props.className}>
-        <Form {...{ onSearch }} />
+        <Form {...{
+          onSearch: setSearchQuery,
+        }} />
+        <PictureList {...{ searchQuery }} />
       </div>
     </AppContainer>
   );
@@ -25,7 +27,8 @@ const App: React.FunctionComponent<AppProps> = (props) => {
 const StyledApp = styled(App)`
   margin: 141px 195px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 `
 
