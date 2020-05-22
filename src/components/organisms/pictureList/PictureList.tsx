@@ -1,18 +1,23 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks'
 import { GET_CHARACTERS } from './queries'
-import CharacterItem from '../CharacterItem/CharacterItem'
+import CharacterItem from '../../molecules/characterItem/CharacterItem'
 import { Character, GetCharactersData, GetCharactersVariables } from '../../../helper/interfaces/Character'
 import styled from "styled-components";
 
 interface props {
   searchQuery: string;
+  excludedCharacters: Array<string>,
+  addExcludedCharacter(id: string): void,
 
   className?: string;
 }
 
 const PictureList: React.FC<props> = ({
   searchQuery = '',
+  excludedCharacters,
+  addExcludedCharacter,
+
   className,
 }) => {
   const { loading, data, error } = useQuery<GetCharactersData, GetCharactersVariables>(GET_CHARACTERS, {
@@ -37,16 +42,23 @@ const PictureList: React.FC<props> = ({
     )
   }
 
+  const charactersFiltered = data.characters.results.filter( (characterItem: Character): boolean => {
+    const { id } = characterItem
+    return !excludedCharacters.includes(id)
+  })
+
   return (
     <div className={className}>
-      {data.characters.results.map( (props: Character): React.ReactElement => {
+      {charactersFiltered.map( (props: Character): React.ReactElement => {
         const {image, id, name} = props
         return (
           <CharacterItem
             key={id}
             {...{
+              id,
               image,
               name,
+              onCloseClick: addExcludedCharacter,
             }}
           />
         )

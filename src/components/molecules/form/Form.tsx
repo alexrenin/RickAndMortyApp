@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import styled from 'styled-components'
 import InputSearch from '../../atoms/inputSearch/InputSearch'
 import { preventEvent } from "../../../helper/helper";

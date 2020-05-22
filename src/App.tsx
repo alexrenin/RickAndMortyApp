@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import Form from './components/molecules/form/Form'
 import styled from 'styled-components'
 import AppContainer from './components/templates/appContainer/AppContainer'
-import PictureList from  './components/molecules/pictureList/PictureList'
+import PictureList from  './components/organisms/pictureList/PictureList'
 
 interface AppProps {
 
@@ -11,6 +11,17 @@ interface AppProps {
 
 const App: React.FunctionComponent<AppProps> = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [excludedCharacters, setExcludedCharacters] = useState<Array<string>>([])
+
+  const addExcludedCharacter = useCallback(
+    (id: string): void => {
+      setExcludedCharacters([
+        id,
+        ...excludedCharacters
+      ])
+    },
+    [excludedCharacters, setExcludedCharacters]
+  )
 
   return (
     <AppContainer>
@@ -18,7 +29,11 @@ const App: React.FunctionComponent<AppProps> = (props) => {
         <Form {...{
           onSearch: setSearchQuery,
         }} />
-        <PictureList {...{ searchQuery }} />
+        <PictureList {...{
+          searchQuery,
+          excludedCharacters,
+          addExcludedCharacter,
+        }} />
       </div>
     </AppContainer>
   );

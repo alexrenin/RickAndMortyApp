@@ -1,14 +1,14 @@
-import React from "react";
+import React, {useMemo, useCallback} from "react";
 import styled from 'styled-components'
-import {useMemo} from "react";
 import ImageCharacter from '../../atoms/imageCharacter/ImageCharacter'
 import BtnClose from '../../atoms/btnClose/BtnClose'
 
 interface props {
   image: string,
+  id: string,
   name?: string,
   onClick?(event: React.MouseEvent): void,
-  onCloseClick?(event: React.MouseEvent): void,
+  onCloseClick?(id: string): void,
   className?: string;
 }
 
@@ -20,11 +20,20 @@ const BtnCloseContainer = styled.div`
 
 const CharacterItem: React.FunctionComponent<props> = ({
   image,
+  id,
   name = '',
   onClick,
-  onCloseClick,
+  onCloseClick = f => f,
+
   className,
 }) => {
+  const onCloseBtnClick = useCallback(
+    (event: React.MouseEvent): void => {
+      onCloseClick(id)
+    },
+    [onCloseClick]
+  )
+
   return useMemo(
     () => {
       return (
@@ -36,13 +45,13 @@ const CharacterItem: React.FunctionComponent<props> = ({
           }} />
           <BtnCloseContainer>
             <BtnClose
-              onClick={onCloseClick}
+              onClick={onCloseBtnClick}
             />
           </BtnCloseContainer>
         </div>
       )
     },
-    [image, name, onClick]
+    [image, name, onClick, onCloseBtnClick]
   )
 }
 

@@ -24,6 +24,7 @@ const InputSearch: React.FunctionComponent<props> = ({ onChange }) => {
     () => {
       return (
         <InputStyled
+          placeholder="Type something..."
           type="text"
           name="name"
           onChange={onChange}
