@@ -11,7 +11,6 @@ interface props {
 const ImageStyled = styled.img`  
   width: 180px;
   height: 220px;
-  cursor: pointer;
   background-color: #dadada;
 `
 

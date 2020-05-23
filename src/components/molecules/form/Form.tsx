@@ -38,7 +38,7 @@ const Form: React.FunctionComponent<FormProps> = ({
         </form>
       )
     },
-    [onSearch]
+    [onSearch, className]
   )
 }
 

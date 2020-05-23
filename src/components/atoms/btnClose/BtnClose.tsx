@@ -22,7 +22,7 @@ const BtnClose: React.FunctionComponent<props> = ({
         </button>
       )
     },
-    [onClick]
+    [onClick, className]
   )
 }
 

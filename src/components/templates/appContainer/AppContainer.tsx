@@ -8,11 +8,14 @@ interface Props {
 }
 
 const AppContainer: React.FC<Props> = ({ children }): JSX.Element => {
+  console.log('render')
   return (
-    <ApolloProvider client={client}>
+    <>
       <GlobalStyles />
-      {children}
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        {children}
+      </ApolloProvider>
+    </>
   )
 }
 

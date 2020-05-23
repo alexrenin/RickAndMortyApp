@@ -9,6 +9,7 @@ interface props {
   searchQuery: string;
   excludedCharacters: Array<string>,
   addExcludedCharacter(id: string): void,
+  chooseCharacter(image: string, name: string): void,
 
   className?: string;
 }
@@ -17,6 +18,7 @@ const PictureList: React.FC<props> = ({
   searchQuery = '',
   excludedCharacters,
   addExcludedCharacter,
+  chooseCharacter,
 
   className,
 }) => {
@@ -58,6 +60,7 @@ const PictureList: React.FC<props> = ({
               id,
               image,
               name,
+              onClick: chooseCharacter,
               onCloseClick: addExcludedCharacter,
             }}
           />

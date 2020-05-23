@@ -7,7 +7,7 @@ interface props {
   image: string,
   id: string,
   name?: string,
-  onClick?(event: React.MouseEvent): void,
+  onClick?(image: string, name: string): void,
   onCloseClick?(id: string): void,
   className?: string;
 }
@@ -22,7 +22,7 @@ const CharacterItem: React.FunctionComponent<props> = ({
   image,
   id,
   name = '',
-  onClick,
+  onClick = f => f,
   onCloseClick = f => f,
 
   className,
@@ -31,7 +31,13 @@ const CharacterItem: React.FunctionComponent<props> = ({
     (event: React.MouseEvent): void => {
       onCloseClick(id)
     },
-    [onCloseClick]
+    [onCloseClick, id]
+  )
+  const onChooseClick = useCallback(
+    (event: React.MouseEvent): void => {
+      onClick(image, name)
+    },
+    [onClick, image, name]
   )
 
   return useMemo(
@@ -41,7 +47,7 @@ const CharacterItem: React.FunctionComponent<props> = ({
           <ImageCharacter {...{
             imageUrl: image,
             name,
-            onClick,
+            onClick: onChooseClick,
           }} />
           <BtnCloseContainer>
             <BtnClose
@@ -51,14 +57,15 @@ const CharacterItem: React.FunctionComponent<props> = ({
         </div>
       )
     },
-    [image, name, onClick, onCloseBtnClick]
+    [image, name, onChooseClick, onCloseBtnClick, className]
   )
 }
 
 const StyledCharacterItem = styled(CharacterItem)`
   position: relative;
   margin-top: 30px;
-  margin-right: 30px;  
+  margin-right: 30px;   
+  cursor: pointer; 
 `
 
 
