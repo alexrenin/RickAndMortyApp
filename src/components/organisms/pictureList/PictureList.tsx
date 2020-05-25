@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks'
-import { GET_CHARACTERS } from './queries'
+import { GET_CHARACTERS } from '../../../appolo/queries'
 import CharacterItem from '../../molecules/characterItem/CharacterItem'
 import { Character, GetCharactersData, GetCharactersVariables } from '../../../helper/interfaces/Character'
 import styled from "styled-components";

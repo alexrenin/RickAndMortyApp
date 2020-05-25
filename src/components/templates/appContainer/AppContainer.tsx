@@ -8,7 +8,7 @@ interface Props {
 }
 
 const AppContainer: React.FC<Props> = ({ children }): JSX.Element => {
-  console.log('render')
+  
   return (
     <>
       <GlobalStyles />
